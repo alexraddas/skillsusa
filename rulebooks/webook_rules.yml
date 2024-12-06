@@ -13,8 +13,7 @@
           name: Trigger from EDA
           organization: Default
           job_args:
-            message: "{{ event.payload.message }}"
-            username: "{{ event.payload.username }}"
+            extra_vars: "{{ event.payload }}"
 
     - name: Didn't hear Hello
       condition: event.payload.message != "Hello"

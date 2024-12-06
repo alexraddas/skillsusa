@@ -4,7 +4,7 @@
   tasks:
   - name: Debug message from AAP Controller
     ansible.builtin.debug:
-      msg: "{{ message | default('No message provided') }}"
+      msg: "{{ ansible_eda.event.payload.message | default('No message provided') }}"
   - name: Debug Username from AAP Controller
     ansible.builtin.debug:
-      msg: "{{ username | default('No username provided') }}"
+      msg: "{{ ansible_eda.event.payload.username | default('No username provided') }}"
