@@ -1,16 +1,16 @@
-## EDA Bootstrap
+# EDA Bootstrap
 
-### Pre-Requisites
+## Pre-Requisites
 - ansible
 - ansible.eda collection ```ansible-galaxy collection install ansible.eda```
 
-### Export Required Environment Variables
+## Export Required Environment Variables
 ```
 export CONTROLLER_HOST="<https://eda.example.com>"
 export CONTROLLER_USERNAME="admin"
 export CONTROLLER_PASSWORD=$(kubectl get secret ansible-eda-admin-password -n eda -o jsonpath="{.data.password}" | base64 --decode ; echo)
 ```
-### Update the playbook vars as needed
+## Update the playbook vars as needed
 ```
 - name: Bootstrap EDA
   hosts: localhost
@@ -27,7 +27,7 @@ export CONTROLLER_PASSWORD=$(kubectl get secret ansible-eda-admin-password -n ed
     project_name: "<PROJECT_NAME>"
 ```
 
-### Run the Playbook from this folder
+## Run the Playbook from this folder
 ```
 ansible-playbook playbooks/boostrap.yml
 ```
