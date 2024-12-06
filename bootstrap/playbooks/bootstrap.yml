@@ -1,0 +1,56 @@
+---
+- name: Bootstrap EDA
+  hosts: localhost
+  gather_facts: false
+  vars:
+    aap_host: "<https://awx.example.com>"
+    aap_token: "<AWX OAUTH TOKEN>"
+    event_stream_token: "<RANDOM_BEARER_TOKEN_FOR_WEBHOOK_AUTH"
+    event_stream_name: "<EVENT_STREAM_PREFIX>"
+    git_repo: "<https://github.com/USER/RULEBOOK_REPO>"
+    organization: Default
+    decision_environment_image: "<quay.io/USER/DE_IMAGE>"
+    decision_environment_name: "<DECISION_ENV_NAME>"
+    project_name: "<PROJECT_NAME>"
+  tasks:
+    - name: Create a project from GitHub
+      ansible.eda.project:
+        name: "{{ project_name }}"
+        url: "{{ git_repo }}"
+        organization: "{{ organization }}"
+        state: present
+
+    - name: Create a credential for Red Hat Ansible Automation Platform
+      ansible.eda.credential:
+        name: AWX Credential
+        credential_type_name: 'Red Hat Ansible Automation Platform'
+        organization: "{{ organization }}"
+        inputs:
+          host: "{{ aap_host }}"
+          oauth_token: "{{ aap_token }}"
+        state: present
+
+    - name: Create a Decision Environment
+      ansible.eda.decision_environment:
+        name: "{{ decision_environment_name }}"
+        image_url: "{{ decision_environment_image }}"
+        organization: "{{ organization }}"
+        state: present
+
+    - name: Create a Token credential for the event stream
+      ansible.eda.credential:
+        name: "{{ event_stream_name }} - Event Stream Token"
+        credential_type_name: Token Event Stream
+        organization: "{{ organization }}"
+        inputs:
+          token: "{{ event_stream_token }}"
+        state: present
+
+    - name: Create an event stream
+      ansible.eda.event_stream:
+        name: "{{ event_stream_name }} - Event Stream"
+        event_stream_type: Token Event Stream
+        credential: "{{ event_stream_name }} - Event Stream Token"
+        organization: "{{ organization }}"
+        forward_events: true
+        state: present
