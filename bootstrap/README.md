@@ -6,7 +6,7 @@
 
 ## Export Required Environment Variables
 ```
-export CONTROLLER_HOST="<https://eda.example.com>"
+export CONTROLLER_HOST="https://eda.example.com"
 export CONTROLLER_USERNAME="admin"
 export CONTROLLER_PASSWORD=$(kubectl get secret ansible-eda-admin-password -n eda -o jsonpath="{.data.password}" | base64 --decode ; echo)
 ```
