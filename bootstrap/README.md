@@ -1,6 +1,6 @@
 ## EDA Bootstrap
 
-## Pre-Requisites
+### Pre-Requisites
 - ansible
 - ansible.eda collection ```ansible-galaxy collection install ansible.eda```
 
