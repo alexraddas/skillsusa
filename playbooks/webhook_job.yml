@@ -4,4 +4,7 @@
   tasks:
   - name: Debug message from AAP Controller
     ansible.builtin.debug:
-      msg: "Hello from Ansible Automation Platform!"
+      msg: "{{ message }}"
+  - name: Debug Username from AAP Controller
+    ansible.builtin.debug:
+      msg: "{{ username }}"

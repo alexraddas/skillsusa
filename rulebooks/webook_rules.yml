@@ -12,6 +12,10 @@
         run_job_template:
           name: Trigger from EDA
           organization: Default
+          job_args:
+            extra_vars:
+              message: "{{ event.payload.message }}"
+              username: "{{ event.payload.username }}"
 
     - name: Didn't hear Hello
       condition: event.payload.message != "Hello"
